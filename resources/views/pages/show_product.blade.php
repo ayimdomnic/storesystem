@@ -17,7 +17,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-8 gallery">
                     @if ($product->photos->count() === 0)
                         <p>No Images found for this Product.</p><br>
-                        <img src="/store/src/public/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image">
+                        <img src="/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image">
                     @else
                         @foreach ($product->photos->slice(0, 8) as $photo)
                             <div class="col-xs-6 col-sm-4 col-md-3 gallery_image text-center">
@@ -47,7 +47,7 @@
                         <h5 class="text-center red-text">Sold Out</h5>
                         <p class="text-center"><b>Available: {{ $product->product_qty }}</b></p>
                     @else
-                        <form action="/store/cart/add" method="post" name="add_to_cart">
+                        <form action="store/cart/add" method="post" name="add_to_cart">
                             {!! csrf_field() !!}
                             <input type="hidden" name="product" value="{{$product->id}}" />
                             <label>QTY</label>
@@ -101,7 +101,7 @@
                             <a href="{{ route('show.product', $similar->product_name) }}">
                                 @if ($similar->photos->count() === 0)
                                     <p id="Similar-Title">{{ str_limit($similar->product_name, $limit = 28, $end = '...') }}</p>
-                                    <img src="/store/src/public/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image">
+                                    <img src="/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image">
                                 @else
                                     @if ($similar->featuredPhoto)
                                         <p id="Similar-Title">{{ str_limit($similar->product_name, $limit = 28, $end = '...') }}</p>

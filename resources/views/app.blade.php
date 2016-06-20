@@ -9,27 +9,27 @@
         <meta name=description content="A medium sized e-commerce shopping cart made by David Trushkov. Made using Laravel 5.2" />
         <meta name="keywords" content="shopping, ecommerce, store, electronics, electronics store, david, david trushkov, github, laravel, laravel 5, laravel 5.2" />
         <meta name="author" content="David Trushkov" />
-        <link rel="shortcut icon" href="{!! asset('public/images/slider/fav-icon.png') !!}" />
+        <link rel="shortcut icon" href="{!! asset('images/slider/fav-icon.png') !!}" />
 
-        <title>E-commerce Store</title>
+        <title>Safari Store</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <!-- Bootstrap core mdb.css -->
-        <link rel="stylesheet" href="{{ asset('public/css/mdb.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/mdb.css') }}">
         <!-- Include app.less file -->
-        <link rel="stylesheet" href="{{ asset('public/less/app.less') }}">
+        <link rel="stylesheet" href="{{ asset('less/app.less') }}">
         <!-- Include app.scss file -->
-        <link rel="stylesheet" href="{{ asset('public/sass/app.scss') }}">
+        <link rel="stylesheet" href="{{ asset('sass/app.scss') }}">
         <!-- Include sweet alert file -->
-        <link rel="stylesheet" href="{{ asset('public/css/sweetalert.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
         <!-- Include typeahead file -->
-        <link rel="stylesheet" href="{{ asset('public/css/typeahead.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/typeahead.css') }}">
         <!-- Include lity ligh-tbox file -->
-        <link rel="stylesheet" href="{{ asset('public/css/lity.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/lity.css') }}">
         
         <!-- Added the main.css file that combines app.scss and app.css togather -->
-        <link rel="stylesheet" href="{{ asset('public/css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         
         
         <!-- Material Design Icons -->
@@ -55,19 +55,19 @@
     @yield('content')
 
     <!-- jQuery -->
-    <script type="text/javascript" src="{{ asset('public/js/libs/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/libs/jquery.js') }}"></script>
     <!-- Include main app.js file -->
-    <script type="text/javascript" src="{{ asset('public/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('public/js/libs/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/libs/bootstrap.min.js') }}"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ asset('public/js/libs/mdb.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/libs/mdb.js') }}"></script>
     <!-- Include sweet-alert.js file -->
-    <script type="text/javascript" src="{{ asset('public/js/libs/sweetalert.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/libs/sweetalert.js') }}"></script>
     <!-- Include typeahead.js file -->
-    <script type="application/javascript" src="{{ asset('public/js/libs/typeahead.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/libs/typeahead.js') }}"></script>
     <!-- Include lity light-box js file -->
-    <script type="application/javascript" src="{{ asset('public/js/libs/lity.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/libs/lity.js') }}"></script>
     <!-- Stripe.js file -->
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 

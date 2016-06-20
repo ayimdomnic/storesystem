@@ -15,7 +15,7 @@
                     <div class="col-sm-6 col-md-3 animated zoomIn" id="featured-container">
                         <a href="{{ route('show.product', $product->product_name) }}">
                         @if ($product->photos->count() === 0)
-                            <img src="/store/src/public/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image" style="width: 200px; height: 200px;">
+                            <img src="/images/no-image-found.jpg" alt="No Image Found Tag" id="Product-similar-Image" style="width: 200px; height: 200px;">
                         @else
                             @if ($product->featuredPhoto)
                                 <img src="/store/{{ $product->featuredPhoto->thumbnail_path }}" alt="Photo ID: {{ $product->featuredPhoto->id }}" />

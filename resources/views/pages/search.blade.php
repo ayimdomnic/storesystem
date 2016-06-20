@@ -24,7 +24,7 @@
                         <div class="col-md-4 text-center hoverable">
                             <a href="{{ route('show.product', $query->product_name) }}">
                             @if ($query->photos->count() === 0)
-                                    <img src="/store/src/public/images/no-image-found.jpg" alt="No Image Found Tag">
+                                    <img src="/images/no-image-found.jpg" alt="No Image Found Tag">
                             @else
                                 @if ($query->featuredPhoto)
                                     <img src="/store/{{ $query->featuredPhoto->thumbnail_path }}" alt="Photo ID: {{ $query->featuredPhoto->id }}" />

@@ -6,27 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" href="{!! asset('public/images/slider/fav-icon.png') !!}" />
+    <link rel="shortcut icon" href="{!! asset('images/slider/fav-icon.png') !!}" />
 
     <title>Store Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Bootstrap core mdb.css -->
-    <link rel="stylesheet" href="{{ asset('public/css/mdb.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mdb.css') }}">
     <!-- Include admin.less file -->
-    <link rel="stylesheet" href="{{ asset('public/less/admin.less') }}">
-    <link rel="stylesheet" href="{{ asset('public/less/app.less') }}">
+    <link rel="stylesheet" href="{{ asset('less/admin.less') }}">
+    <link rel="stylesheet" href="{{ asset('less/app.less') }}">
     <!-- Include app.scss file -->
-    <link rel="stylesheet" href="{{ asset('public/sass/app.scss') }}">
+    <link rel="stylesheet" href="{{ asset('sass/app.scss') }}">
     <!-- Include sweet alert file -->
-    <link rel="stylesheet" href="{{ asset('public/css/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
     <!-- Include lity light-tbox file -->
-    <link rel="stylesheet" href="{{ asset('public/css/lity.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lity.css') }}">
     <!-- Include drop-zone file -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/dropzone.css">
     <!-- Include Froala Editor style. -->
-    <link href="{{ asset('public/css/froala_editor.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/froala_editor.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Material Design Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
@@ -51,21 +51,21 @@
 @yield('content')
 
 <!-- jQuery -->
-<script type="application/javascript" src="{{ asset('public/js/libs/jquery.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/jquery.js') }}"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="application/javascript" src="{{ asset('public/js/libs/bootstrap.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/bootstrap.min.js') }}"></script>
 <!-- MDB core JavaScript -->
-<script type="application/javascript" src="{{ asset('public/js/libs/mdb.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/mdb.js') }}"></script>
 <!-- Include sweet-alert.js file -->
-<script type="application/javascript" src="{{ asset('public/js/libs/sweetalert.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/sweetalert.js') }}"></script>
 <!-- Include main app.js file -->
-<script type="application/javascript" src="{{ asset('public/js/app.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/app.js') }}"></script>
 <!-- Include lity light-box js file -->
-<script type="application/javascript" src="{{ asset('public/js/libs/lity.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/lity.js') }}"></script>
 <!-- Include moment.js for chart.js -->
-<script type="application/javascript" src="{{ asset('public/js/libs/moment.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/moment.js') }}"></script>
 <!-- Chart.js plugin -->
-<script type="application/javascript" src="{{ asset('public/js/libs/Chart.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/libs/Chart.js') }}"></script>
 
 @yield('footer')
 
