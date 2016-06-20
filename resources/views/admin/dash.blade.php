@@ -8,7 +8,7 @@
 
     <link rel="shortcut icon" href="{!! asset('images/slider/fav-icon.png') !!}" />
 
-    <title>Store Dashboard</title>
+    <title>Safari Dashboard | Welcome admin</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
