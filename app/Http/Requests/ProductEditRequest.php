@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Product;
 
-class ProductEditRequest extends Request
-{
+class ProductEditRequest extends Request {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,12 +21,11 @@ class ProductEditRequest extends Request
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'product_name' => 'required|max:75|min:3|unique:products',
+            'product_name' => 'required|max:75|min:3',
             'product_qty' => 'required|max:2|min:1',
-            'product_sku' => 'required|integer|unique:products',
+            'product_sku' => 'required|integer',
             'price' => 'required|max:9||min:1',
             'reduced_price' => 'max:9||min:1',
             'category' => 'required',
@@ -37,4 +35,5 @@ class ProductEditRequest extends Request
             'product_spec' => 'max:3500',
         ];
     }
+
 }

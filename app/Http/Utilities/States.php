@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Http\Utilities;
+
 class States {
+
     /**
      * Array of Countries.
      *
@@ -61,6 +64,8 @@ class States {
             'WI' => "Wisconsin",
             'WY' => "Wyoming"
         ];
+
+
     /**
      *  Return all the states.
      *
@@ -69,4 +74,5 @@ class States {
     public static function all() {
         return array_keys(static::$states);
     }
+
 }

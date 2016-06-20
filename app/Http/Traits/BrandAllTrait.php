@@ -1,16 +1,15 @@
 <?php
-
 namespace App\Http\Traits;
-
 
 use App\Brand;
 
-trait BrandAllTrait
-{
+trait BrandAllTrait {
 
 
-	public function brandsAll()
-	{
-		return Brand::all();
-	}
+    public function brandsAll() {
+        // Get all the brands from the Brands Table.
+        return Brand::all();
+    }
+
+
 }

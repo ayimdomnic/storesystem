@@ -7,19 +7,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
-
     protected $table = 'users';
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
+    /**
+     * The attributes that are mass assignable.
+
+     * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password' 'admin',
+        'username',
+        'email',
+        'password',
+        'admin',
     ];
 
+
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
@@ -27,15 +36,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-     public static function boot() {
+
+    /**
+     * Make a boot function to listen
+     * to any model events that are fired below.
+     */
+    public static function boot() {
         // Reference the parent class
         parent::boot();
+
         // When we are creating a record (for user registration),
         // then we want to set a token to some random string.
         static::creating(function($user) {
             $user->token = str_random(30);
         });
     }
+
+
     /**
      * Confirm the users email by
      * setting verified to true,
@@ -47,4 +64,6 @@ class User extends Authenticatable
         $this->token = null;
         $this->save();
     }
+    
+    
 }

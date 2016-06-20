@@ -3,6 +3,7 @@
 namespace App\Http\Utilities;
 
 class Country {
+
     /**
      * Array of Countries.
      *
@@ -251,6 +252,8 @@ class Country {
             "Zambia"                                       => "zm",
             "Zimbabwe"                                     => "zw"
         ];
+
+
     /**
      *  Return all the countries.
      *
@@ -259,4 +262,5 @@ class Country {
     public static function all() {
         return array_keys(static::$countries);
     }
+
 }

@@ -1,42 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Brand;
 use App\Product;
 use App\Category;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+
 use App\Http\Traits\BrandAllTrait;
 use App\Http\Traits\CategoryTrait;
 use App\Http\Traits\CartTrait;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-
-class QueryController extends Controller
-{
-    
 
 
+class QueryController extends Controller {
 
-    public function search()
-    {
-    	$categories = $this->categoryAll();
-
-    	$brands = $this->brandsAll();
-    	$cart_count = $this->countProductsInCart();
-
-    	$query = Input::get('search');
+    use BrandAllTrait, CategoryTrait, CartTrait;
 
 
-    	$search = Product::where('product_name', 
-    		'LIVE', '%'. $query . '%')->get();
+    /**
+     * Search for items in our e-commerce store
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search() {
 
-    	if ($search->empty()) {
-    		# code...
-    		flash()->error('Error', 'No Search results for your query..');
+        // From Traits/CategoryTrait.php
+        // ( Show Categories in side-nav )
+        $categories = $this->categoryAll();
 
-    		return redirect('/');
-    	}
+        // From Traits/BrandAll.php
+        // Get all the Brands
+        $brands = $this->brandsAll();
 
-    	return view ('pages.search', compact('search','query','categories','brands','cart_count'));
+        // From Traits/CartTrait.php
+        // ( Count how many items in Cart for signed in user )
+        $cart_count = $this->countProductsInCart();
+
+        // Gets the query string from our form submission
+        $query = Input::get('search');
+
+        // Returns an array of products that have the query string located somewhere within
+        // our products product name. Paginate them so we can break up lots of search results.
+        $search = Product::where('product_name', 'LIKE', '%' . $query . '%')->paginate(200);
+
+        // If no results come up, flash info message with no results found message.
+        if ($search->isEmpty()) {
+            flash()->info('Not Found', 'No search results found.');
+            return redirect('/');
+        }
+
+        // Return a view and pass the view the list of products and the original query.
+        return view('pages.search', compact('search', 'query', 'categories', 'brands', 'cart_count'));
     }
+
+
 }

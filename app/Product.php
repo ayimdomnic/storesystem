@@ -7,8 +7,7 @@ use App\Brand;
 use App\Category;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model 
-{
+class Product extends Model {
 
     protected $table = 'products';
 
@@ -24,7 +23,10 @@ class Product extends Model
         'description',
         'product_spec',
     ];
+
     //protected $gaurded = ['id'];
+
+
     /**
      * One Product can have one Category.
      *
@@ -33,7 +35,10 @@ class Product extends Model
     public function category() {
         return $this->hasOne('App\Category', 'id');
     }
+
+
     // do same thing above for category() if you want to show what category a certain product is under in products page.
+
     /**
      * A Product Belongs To a Brand
      *
@@ -42,6 +47,8 @@ class Product extends Model
     public function brand() {
         return $this->belongsTo('App\Brand');
     }
+
+
     /**
      * Save a Product to the ProductPhoto instance.
      *
@@ -51,6 +58,8 @@ class Product extends Model
     public function addPhoto(ProductPhoto $ProductPhoto) {
         return $this->photos()->save($ProductPhoto);
     }
+
+
     /**
      * One Product can have many photos.
      *
@@ -59,6 +68,8 @@ class Product extends Model
     public function photos() {
         return $this->hasMany('App\ProductPhoto');
     }
+
+
     /**
      * Return a product can have one featured photo where "featured" column = true (or 1)
      *
@@ -67,6 +78,8 @@ class Product extends Model
     public function featuredPhoto() {
         return $this->hasOne('App\ProductPhoto')->whereFeatured(true);
     }
+
+
     /**
      * Show a product when clicked on (Admin side).
      *
@@ -76,6 +89,8 @@ class Product extends Model
     public static function LocatedAt($id) {
         return static::where(compact('id'))->firstOrFail();
     }
+
+
     /**
      * Show a Product when clicked on.
      *
@@ -85,4 +100,6 @@ class Product extends Model
     public static function ProductLocatedAt($product_name) {
         return static::where(compact('product_name'))->firstOrFail();
     }
+
+
 }

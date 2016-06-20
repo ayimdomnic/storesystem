@@ -5,6 +5,8 @@ namespace App;
 use Image;
 
 class Thumbnail {
+
+
     /**
      * Make a Photo Thumbnail of the product images
      *
@@ -16,4 +18,5 @@ class Thumbnail {
             ->fit(200)
             ->save($destination);
     }
+
 }

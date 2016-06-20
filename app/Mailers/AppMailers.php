@@ -3,22 +3,20 @@
 namespace App\Mailers;
 
 use App\User;
-
 use Illuminate\Contracts\Mail\Mailer;
 
-class AppMailers
-{
-	/**
+class AppMailers {
+
+    /**
      * @var Mailer
      */
-
     protected $mailer;
 
     /**
      * Who is the email from.
      */
-
     protected $from = 'store@admin.com';
+
     /**
      * Who is this going to.
      */
@@ -27,23 +25,22 @@ class AppMailers
     /**
      * What view are we fetching.
      */
-
     protected $view;
 
     /**
      * What data are we passing through.
      */
-
     protected $data = [];
+
 
     /**
      * @param Mailer $mailer
      */
-
     public function __construct(Mailer $mailer)
     {
         $this->mailer = $mailer;
     }
+
 
     /**
      * Send the email confirmation to user.
@@ -60,13 +57,16 @@ class AppMailers
         // Now deliver the email to the user.
         $this->deliver();
     }
+
+
     /**
      * Delivery email to user.
      */
     public function deliver() {
         $this->mailer->send($this->view, $this->data, function($message) {
-            $message->from($this->from, 'Darth Vader')
+            $message->from($this->from, 'Administrator')
                 ->to($this->to);
         });
     }
+
 }

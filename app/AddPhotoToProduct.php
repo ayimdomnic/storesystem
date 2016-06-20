@@ -2,58 +2,82 @@
 
 namespace App;
 
-use Symphony\Component\HttpFoundation\File\UploadFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AddPhotoToProduct 
-{
+class AddPhotoToProduct {
 
-	protected $product
-
-
-
-	protected $file
+    /**
+     * @var Product
+     */
+    protected $product;
 
 
+    /**
+     * The UploadedFile Instance.
+     *
+     * @var UploadedFile
+     */
+    protected $file;
 
 
-	public function __construct(Product $product, UploadFile $file, Thumbnail $thumbnail = null)
-	{
-		$this->product = $product;
-		$this->file =$file;
-		$this->thumbnail = $thumbnail ?: new Thumbnail;
-	}
+    /**
+     * Create a new AddPhotoToProduct form object.
+     *
+     * @param Product $product
+     * @param UploadedFile $file
+     * @param Thumbnail|null $thumbnail
+     */
+    public function __construct(Product $product, UploadedFile $file, Thumbnail $thumbnail = null) {
+        $this->product = $product;
+        $this->file = $file;
+        $this->thumbnail = $thumbnail ?: new Thumbnail;
+    }
 
 
-	public function save()
-	{
-		$photo = $this->product->addPhoto($this->makePhoto());
+    /**
+     * Process the form.
+     */
+    public function save() {
 
-		$this->file->move($photo->baseDir(), $photo->name);
-		$this->thumbnail->make($photo->path, $photo->thumbnail_path);
-	}
+        // Attach the photo to the product.
+        $photo = $this->product->addPhoto($this->makePhoto());
 
-	#make a new photo instance
-	//pardon my comments I'm using Sublime text
+        // move a file to the base directory with the file name.
+        $this->file->move($photo->baseDir(), $photo->name);
 
-	protected function makePhoto()
-	{
-		return new ProductPhoto(['name'=> $this->makeFilename()]);
-	}
-
+        // Generate a photo thumbnail.
+        $this->thumbnail->make($photo->path, $photo->thumbnail_path);
+    }
 
 
-	protected function makeFilename()
-	{
-		//get the files original name
-		//sha1 encryption
-		$name = sha1(
-			time() . $this->file->getClientOriginalName();
-			);
-		//get the extension of the photo
-		$extension = $this->file->getClientOriginalExtension();
+    /**
+     * Make a new Photo Instance.
+     *
+     * @return ProductPhoto
+     */
+    protected function makePhoto() {
+        return new ProductPhoto(['name' => $this->makeFilename()]);
+    }
 
-		// then set name we merge the two (Dom The GOAT)
-		 return "{$name}.{$extension}";
-	}
-    
+
+    /**
+     * Make a Filename, based on the uploaded file.
+     *
+     * @return string
+     */
+    protected function makeFilename() {
+
+        // Get the file name original name
+        // and encrypt it with sha1
+        $name = sha1 (
+            time() . $this->file->getClientOriginalName()
+        );
+
+        // Get the extension of the photo.
+        $extension = $this->file->getClientOriginalExtension();
+
+        // Then set name = merge those together.
+        return "{$name}.{$extension}";
+    }
+
 }

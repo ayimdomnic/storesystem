@@ -15,7 +15,6 @@ class Flash
      * @param string $key
      * @return mixed
      */
-
     public function create($title, $message, $level, $key = 'flash_message')
     {
         return session()->flash($key, [
@@ -25,6 +24,7 @@ class Flash
         ]);
     }
 
+
     /**
      * Display the success flash message icon.
      *
@@ -32,11 +32,11 @@ class Flash
      * @param $message
      * @return mixed
      */
-
-    public function success($title, $message) 
-    {
+    public function success($title, $message) {
         return $this->create($title, $message, 'success');
     }
+
+
     /**
      * Display the error flash message icon.
      *
@@ -44,10 +44,11 @@ class Flash
      * @param $message
      * @return mixed
      */
-    public function error($title, $message) 
-    {
+    public function error($title, $message) {
         return $this->create($title, $message, 'error');
     }
+
+
     /**
      * Display the info flash message icon.
      *
@@ -55,10 +56,11 @@ class Flash
      * @param $message
      * @return mixed
      */
-    public function info($title, $message) 
-    {
+    public function info($title, $message) {
         return $this->create($title, $message, 'info');
     }
+
+
     /**
      * Display the overlay flash message.
      *
@@ -67,11 +69,11 @@ class Flash
      * @param string $level
      * @return mixed
      */
-    public function overlay($title, $message, $level = 'info') 
-    {
+    public function overlay($title, $message, $level = 'info') {
         return $this->create($title, $message, $level, 'flash_message_overlay');
     }
-    
+
+
     /**
      *  Display the custom overlay Error flash message.
      *
@@ -80,9 +82,8 @@ class Flash
      * @param string $level
      * @return mixed
      */
-
-    public function customErrorOverlay($title, $message, $level = 'error')
-     {
+    public function customErrorOverlay($title, $message, $level = 'error') {
         return $this->create($title, $message, $level, 'flash_message_custom_error_overlay');
     }
+
 }

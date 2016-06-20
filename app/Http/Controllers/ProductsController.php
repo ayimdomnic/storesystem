@@ -4,51 +4,89 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductEditRequest;
+
 use App\Http\Traits\BrandAllTrait;
 use App\Http\Traits\CategoryTrait;
 use App\Http\Traits\SearchTrait;
 use App\Http\Traits\CartTrait;
-use Auth;
-use Input;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-
-class ProductsController extends Controller
-{
-    
 
 
-    public function showProducts()
-    {
-    	$product = Product::latest()->count();
+class ProductsController extends Controller {
 
-    	$productCount = Product::all()->count();
+    use BrandAllTrait, CategoryTrait, SearchTrait, CartTrait;
 
-    	$cart_count = $this->countProductsInCart();
 
-    	return view('admin.product.show', compact('productCount','product', 'cart_count'));
+    /**
+     * Show all products
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showProducts() {
+
+        // Get all latest products, and paginate them by 10 products per page
+        $product = Product::latest('created_at')->paginate(10);
+
+        // Count all Products in Products Table
+        $productCount = Product::all()->count();
+
+        // From Traits/CartTrait.php
+        // ( Count how many items in Cart for signed in user )
+        $cart_count = $this->countProductsInCart();
+
+        return view('admin.product.show', compact('productCount', 'product', 'cart_count'));
     }
 
-    public function addProduct()
-    {
-    	$categories = $this->parentCategory();
-    	$brands = $this->brandsAll();
-    	$cart_count = $this->countProductsInCart();
 
-    	return view ('admin.products.add', compact('categories','brands','cart_count'));
+    /**
+     * Return the view for add new product
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addProduct() {
+        // From Traits/CategoryTrait.php
+        // ( This is to populate the parent category drop down in create product page )
+        $categories = $this->parentCategory();
+
+        // From Traits/BrandAll.php
+        // Get all the Brands
+        $brands = $this->brandsAll();
+
+        // From Traits/CartTrait.php
+        // ( Count how many items in Cart for signed in user )
+        $cart_count = $this->countProductsInCart();
+
+        return view('admin.product.add', compact('categories', 'brands', 'cart_count'));
     }
 
-    public function addPostProduct(ProductRequest $request)
-    {
-    	$featured = Input::has('featured')? true: false;
-    	$product_name = str_replace("/", "", $request->input('product_name'));
 
-    	$product = Product::create([
-    		'product_name' => $product_name,
-    		'product_qty' => $request->input('product_qty'),
+    /**
+     * Add a new product into the Database.
+     *
+     * @param ProductRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addPostProduct(ProductRequest $request) {
+
+        // Check if checkbox is checked or not for featured product
+        $featured = Input::has('featured') ? true : false;
+
+        // Replace any "/" with a space.
+        $product_name =  str_replace("/", " " ,$request->input('product_name'));
+
+
+       // if (Auth::user()->id == 2) {
+            // If user is a test user (id = 2),display message saying you cant delete if your a test user
+        //    flash()->error('Error', 'Cannot create Product because you are signed in as a test user.');
+       // } else {
+            // Create the product in DB
+            $product = Product::create([
+                'product_name' => $product_name,
+                'product_qty' => $request->input('product_qty'),
                 'product_sku' => $request->input('product_sku'),
                 'price' => $request->input('price'),
                 'reduced_price' => $request->input('reduced_price'),
@@ -57,18 +95,30 @@ class ProductsController extends Controller
                 'featured' => $featured,
                 'description' => $request->input('description'),
                 'product_spec' => $request->input('product_spec'),
+            ]);
 
-    		]);
+            // Save the product into the Database.
+            $product->save();
 
-    	$product ->save();
+            // Flash a success message
+            flash()->success('Success', 'Product created successfully!');
+       // }
 
-    	flash()->sucess('Success','Product Created Successfully!');
 
-    	return redirect()->route('admin.product.show');
+        // Redirect back to Show all products page.
+        return redirect()->route('admin.product.show');
     }
-    public function categoryAPI()
-    {
-    	 // Get the "option" value from the drop-down.
+
+
+    /**
+     * This method will fire off when a admin chooses a parent category.
+     * It will get the option and check all the children of that parent category,
+     * and then list them in the sub-category drop-down.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function categoryAPI() {
+        // Get the "option" value from the drop-down.
         $input = Input::get('option');
 
         // Find the category name associated with the "option" parameter.
@@ -82,36 +132,60 @@ class ProductsController extends Controller
         return \Response::make($subcategory->get(['id', 'category']));
     }
 
-    public function editProduct($id)
-    {
-    	 // Find the product ID
+
+    /**
+     * Return the view to edit & Update the Products
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editProduct($id) {
+
+        // Find the product ID
         $product = Product::where('id', '=', $id)->find($id);
+
         // If no product exists with that particular ID, then redirect back to Show Products Page.
         if (!$product) {
             return redirect('admin/products');
         }
+
         // From Traits/CategoryTrait.php
         // ( This is to populate the parent category drop down in create product page )
         $categories = $this->parentCategory();
+
         // From Traits/BrandAll.php
         // Get all the Brands
         $brands = $this->BrandsAll();
+
         // From Traits/CartTrait.php
         // ( Count how many items in Cart for signed in user )
         $cart_count = $this->countProductsInCart();
+
         // Return view with products and categories
         return view('admin.product.edit', compact('product', 'categories', 'brands', 'cart_count'));
+
     }
 
-    public function updateProduct($id, ProductEditRequest $request)
-    {
-    	// Check if checkbox is checked or not for featured product
+
+    /**
+     * Update a Product
+     *
+     * @param $id
+     * @param ProductEditRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProduct($id, ProductEditRequest $request) {
+
+        // Check if checkbox is checked or not for featured product
         $featured = Input::has('featured') ? true : false;
+
         // Find the Products ID from URL in route
         $product = Product::findOrFail($id);
+
+
         if (Auth::user()->id == 2) {
             // If user is a test user (id = 2),display message saying you cant delete if your a test user
-            flash()->error('Error', 'Cannot edit Product because you are not an Administrator.');
+            flash()->error('Error', 'Cannot edit Product because you are signed in as a test user.');
         } else {
             // Update product
             $product->update(array(
@@ -126,17 +200,28 @@ class ProductsController extends Controller
                 'description' => $request->input('description'),
                 'product_spec' => $request->input('product_spec'),
             ));
+
+
             // Update the product with all the validation rules
             $product->update($request->all());
+
             // Flash a success message
             flash()->success('Success', 'Product updated successfully!');
         }
+
         // Redirect back to Show all categories page.
         return redirect()->route('admin.product.show');
-    
     }
 
+
+    /**
+     * Delete a Product
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteProduct($id) {
+
         if (Auth::user()->id == 2) {
             // If user is a test user (id = 2),display message saying you cant delete if your a test user
             flash()->error('Error', 'Cannot delete Product because you are signed in as a test user.');
@@ -144,38 +229,66 @@ class ProductsController extends Controller
             // Find the product id and delete it from DB.
             Product::findOrFail($id)->delete();
         }
+
         // Then redirect back.
         return redirect()->back();
     }
 
-    public function displayImageUploadPage($id)
-    {
-    	// Get the product ID that matches the URL product ID.
+
+    /**
+     * Display the form for uploading images for each Product
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function displayImageUploadPage($id) {
+
+        // Get the product ID that matches the URL product ID.
         $product = Product::where('id', '=', $id)->get();
+
         // From Traits/CartTrait.php
         // ( Count how many items in Cart for signed in user )
         $cart_count = $this->countProductsInCart();
+
         return view('admin.product.upload', compact('product', 'cart_count'));
     }
 
-    public function show($product_name)
-    {
-    	$product = Product::productLocatedAt($product_name);
 
-    	$search = $this->search();
-    	$category = $this->categoryAll();
-    	$brands = $this->brandsAll();
+    /**
+     * Show a Product in detail
+     *
+     * @param $product_name
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($product_name) {
 
-    	$cart_count = $this->countProductsInCart();
+        // Find the product by the product name in URL
+        $product = Product::ProductLocatedAt($product_name);
+
+        // From Traits/SearchTrait.php
+        // Enables capabilities search to be preformed on this view )
+        $search = $this->search();
+
+        // From Traits/CategoryTrait.php
+        // ( Show Categories in side-nav )
+        $categories = $this->categoryAll();
+
+        // Get brands to display left nav-bar
+        $brands = $this->BrandsAll();
+
+        // From Traits/CartTrait.php
+        // ( Count how many items in Cart for signed in user )
+        $cart_count = $this->countProductsInCart();
+
 
         $similar_product = Product::where('id', '!=', $product->id)
             ->where(function ($query) use ($product) {
                 $query->where('brand_id', '=', $product->brand_id)
                     ->orWhere('cat_id', '=', $product->cat_id);
             })->get();
-        return view('pages.show_product', compact('product', 'search', 'brands', 'categories', 'similar_product', 'cart_count'));
 
+        return view('pages.show_product', compact('product', 'search', 'brands', 'categories', 'similar_product', 'cart_count'));
     }
-    //SPAGHETTI CODE MIGHT WANT TO FIX THIS LATER
+
 
 }

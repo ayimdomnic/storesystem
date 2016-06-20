@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use App\Product;
+use App\Http\Requests\Request;
 
 class ProductPhotoRequest extends Request
 {
@@ -27,6 +27,7 @@ class ProductPhotoRequest extends Request
     public function rules()
     {
         return [
+            // Validate the photo.
             'photo' => 'required|mimes:jpeg,jpg,png,bmp',
         ];
     }
