@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST',  'smtp.gmail.com'),
+    'host' => env('MAIL_HOST',  'smtp.gmail.org'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'ayimdomnic@gmail.com', 'name' => 'Administrator'],
+    'from' => ['address' => 'conelwrites@gmail.com', 'name' => 'Administrator'],
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'ayimdomnic@gmail.com'),
+    'username' => env('MAIL_USERNAME', 'conelwrites@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     |
     */
 
-    'password' => env('MAIL_PASSWORD', 'diana4evan1'),
+    'password' => env('MAIL_PASSWORD', 'shalicia010'),
 
     /*
     |--------------------------------------------------------------------------
